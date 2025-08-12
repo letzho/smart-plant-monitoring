@@ -13,7 +13,21 @@ export default function Dashboard({ user, onLogout, showRec, setShowRec }) {
     const fetchData = () => {
       fetch(`${apiBaseUrl}/api/sensor/latest?serial_number=${user.serial_number}`)
         .then(res => res.json())
-        .then(d => setData(d || {}));
+        .then(d => {
+          console.log('Received sensor data:', d);
+          // Ensure values are numbers
+          const processedData = {
+            temperature: parseFloat(d.temperature) || 0,
+            humidity: parseFloat(d.humidity) || 0,
+            moisture: parseFloat(d.moisture) || 0,
+            timestamp: d.timestamp
+          };
+          console.log('Processed data:', processedData);
+          setData(processedData);
+        })
+        .catch(error => {
+          console.error('Error fetching sensor data:', error);
+        });
     };
     fetchData();
     const interval = setInterval(fetchData, 3 * 60 * 1000); // Poll every 3 minutes (180,000 ms)
@@ -35,17 +49,41 @@ export default function Dashboard({ user, onLogout, showRec, setShowRec }) {
       </div>
       <div className="dashboard-gauges">
         <div className="gauge-card">
-          <GaugeChart id="temp-gauge" nrOfLevels={20} percent={data.temperature / 50} colors={["#ff4d4f", "#1890ff"]} arcWidth={0.3} textColor="#222" formatTextValue={() => `${data.temperature}°C`} />
+          <GaugeChart 
+            id="temp-gauge" 
+            nrOfLevels={20} 
+            percent={Math.min(data.temperature / 50, 1)} 
+            colors={["#ff4d4f", "#1890ff"]} 
+            arcWidth={0.3} 
+            textColor="#222" 
+            formatTextValue={() => `${data.temperature}°C`} 
+          />
           <div className="gauge-label temp">{data.temperature}°C</div>
           <div className="gauge-desc">Temperature</div>
         </div>
         <div className="gauge-card">
-          <GaugeChart id="hum-gauge" nrOfLevels={20} percent={data.humidity / 100} colors={["#b2f7ef", "#00b894"]} arcWidth={0.3} textColor="#222" formatTextValue={() => `${data.humidity}%`} />
+          <GaugeChart 
+            id="hum-gauge" 
+            nrOfLevels={20} 
+            percent={Math.min(data.humidity / 100, 1)} 
+            colors={["#b2f7ef", "#00b894"]} 
+            arcWidth={0.3} 
+            textColor="#222" 
+            formatTextValue={() => `${data.humidity}%`} 
+          />
           <div className="gauge-label hum">{data.humidity}%</div>
           <div className="gauge-desc">Humidity</div>
         </div>
         <div className="gauge-card">
-          <GaugeChart id="moist-gauge" nrOfLevels={20} percent={data.moisture / 100} colors={["#e0c3fc", "#6c47ff"]} arcWidth={0.3} textColor="#222" formatTextValue={() => `${data.moisture}%`} />
+          <GaugeChart 
+            id="moist-gauge" 
+            nrOfLevels={20} 
+            percent={Math.min(data.moisture / 100, 1)} 
+            colors={["#e0c3fc", "#6c47ff"]} 
+            arcWidth={0.3} 
+            textColor="#222" 
+            formatTextValue={() => `${data.moisture}%`} 
+          />
           <div className="gauge-label moist">{data.moisture}%</div>
           <div className="gauge-desc">Soil Moisture</div>
         </div>
