@@ -23,14 +23,19 @@ app.use('/api/sensor', sensorRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/recommendation', recommendationRoutes);
 
-// Serve static files from React build
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
-  });
-}
+// Serve static files from React build (commented out for now)
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+//   
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+//   });
+// }
+
+// Simple root route for testing
+app.get('/', (req, res) => {
+  res.json({ message: 'Smart Plant Monitoring API is running!' });
+});
 
 // Start MQTT service only if not in production (Heroku doesn't need MQTT for demo)
 if (process.env.NODE_ENV !== 'production') {
