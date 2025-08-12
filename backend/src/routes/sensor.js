@@ -49,26 +49,20 @@ router.get('/history', async (req, res) => {
   }
 });
 
-// Add test data endpoint for debugging
-router.post('/test-data', async (req, res) => {
+// Remove test data endpoint - only real sensor data should be used
+
+// Clean up test data endpoint (one-time use)
+router.post('/cleanup-test-data', async (req, res) => {
   try {
-    const { serial_number, temperature, humidity, moisture } = req.body;
-    const testData = {
-      temperature: temperature !== undefined ? temperature : 27.8,
-      humidity: humidity !== undefined ? humidity : 69.7,
-      moisture: moisture !== undefined ? moisture : 45.2,
-      timestamp: new Date()
-    };
-    
+    const { serial_number } = req.body;
     await pool.query(
-      'INSERT INTO sensor_data (serial_number, temperature, humidity, moisture, timestamp) VALUES ($1, $2, $3, $4, $5)',
-      [serial_number, testData.temperature, testData.humidity, testData.moisture, testData.timestamp]
+      'DELETE FROM sensor_data WHERE serial_number = $1',
+      [serial_number]
     );
-    
-    res.json({ message: 'Test data inserted successfully', data: testData });
+    res.json({ message: 'Test data cleaned up successfully' });
   } catch (error) {
-    console.error('Error inserting test data:', error);
-    res.status(500).json({ error: 'Failed to insert test data' });
+    console.error('Error cleaning up test data:', error);
+    res.status(500).json({ error: 'Failed to clean up test data' });
   }
 });
 
