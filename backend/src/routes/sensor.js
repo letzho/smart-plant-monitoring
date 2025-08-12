@@ -54,9 +54,9 @@ router.post('/test-data', async (req, res) => {
   try {
     const { serial_number, temperature, humidity, moisture } = req.body;
     const testData = {
-      temperature: temperature || 27.8,
-      humidity: humidity || 69.7,
-      moisture: moisture || 45.2,
+      temperature: temperature !== undefined ? temperature : 27.8,
+      humidity: humidity !== undefined ? humidity : 69.7,
+      moisture: moisture !== undefined ? moisture : 45.2,
       timestamp: new Date()
     };
     
