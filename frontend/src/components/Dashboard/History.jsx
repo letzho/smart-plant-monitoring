@@ -4,16 +4,30 @@ import { apiBaseUrl } from '../../config';
 
 export default function History({ serialNumber, onClose }) {
   const [rows, setRows] = useState([]);
-  useEffect(() => {
+  
+  const fetchHistory = () => {
     fetch(`${apiBaseUrl}/api/sensor/history?serial_number=${serialNumber}`)
       .then(res => res.json())
-      .then(setRows);
+      .then(setRows)
+      .catch(error => console.error('Error fetching history:', error));
+  };
+  
+  useEffect(() => {
+    fetchHistory();
+    // Refresh data every 30 seconds
+    const interval = setInterval(fetchHistory, 30000);
+    return () => clearInterval(interval);
   }, [serialNumber]);
   return (
     <div className="history-modal">
       <div className="history-content">
-        <button className="close-btn" onClick={onClose}>Close</button>
-        <h3>History for {serialNumber}</h3>
+        <div className="history-header">
+          <h3>History for {serialNumber}</h3>
+          <div className="history-actions">
+            <button className="refresh-btn" onClick={fetchHistory}>Refresh</button>
+            <button className="close-btn" onClick={onClose}>Close</button>
+          </div>
+        </div>
         <table>
           <thead>
             <tr>
