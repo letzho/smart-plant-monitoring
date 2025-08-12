@@ -1,0 +1,202 @@
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #e0e7ff;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #1c1d1d;
+}
+.dashboard-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  /* gap removed for better control */
+}
+.dashboard-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  padding-left: 2rem;
+}
+.device-info {
+  font-size: 0.95rem;
+  color: #888;
+}
+.logout-btn1 {
+  background: #fba82a;
+  color: #f1eaea;
+  
+  border-radius: 8px;
+  padding: 0.8rem 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+  width: fit-content;
+  height: fit-content
+  
+}
+.dashboard-gauges {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 2.5rem 0 1.5rem 0; /* Increased top and bottom margin */
+  gap: 1rem;
+  color: #f0f2f2;
+}
+.gauge-card {
+  flex: 1 1 250px;
+  min-width: 220px;
+  max-width: 320px;
+  background: rgba(139, 198, 253, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(1, 60, 255);
+  box-shadow: rgba(4, 4, 220, 0.25) 0px 13px 27px -5px, rgba(4, 211, 243, 0.3) 0px 8px 16px -8px;
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  margin: 0 auto 1.5rem auto; /* Add bottom margin for vertical gap */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.gauge-label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  
+}
+.gauge-label.temp { color: #ff4d4f; }
+.gauge-label.hum { color: #00b894; }
+.gauge-label.moist { color: #6c47ff; }
+.gauge-desc {
+  font-size: 0.95rem;
+  color: #888;
+}
+
+.gauge-card:hover,
+.dashboard-gauges .gauge-card:hover {
+  transform: translateY(-5px) !important;
+  background: rgba(129, 183, 237, 0.3) !important;
+  border-color: rgb(64, 158, 255) !important;
+  box-shadow: rgba(64, 158, 255, 0.4) 0px 20px 35px -10px, rgba(4, 211, 243, 0.5) 0px 15px 25px -10px !important;
+  cursor: pointer;
+}
+.dashboard-footer {
+  width: 100%;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+.dashboard-actions {
+  width: 100%;
+  display: flex;
+  margin-inline: auto;
+  gap: 5rem;
+  margin-top: 1rem;
+}
+.history-btn, .rec-btn {
+  
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 15px 20px;
+    margin: 0px 4px;
+    cursor: pointer;
+    transition: 0.15s all ease-in-out;
+    -moz-transition: 0.15s all ease-in-out;
+    -webkit-transition: 0.15s all ease-in-out;
+  }
+
+  .history-btn {
+    background: #056df5;
+    border-width: 2px;
+    border-color: #044fb2;
+    
+    
+  }
+
+  .history-btn:hover {
+    
+    box-shadow: 0px 0px 5px #03e9f4,
+          0px 0px 25px #03e9f4,
+          0px 0px 50px #03e9f4,
+          0px 0px 200px #03e9f4;
+  }
+.rec-btn {
+  background: #05f5b5;
+  border-width: 2px;
+  border-color: #03e8ab;
+  
+}
+.rec-btn:hover{
+
+background: #05f5b5;
+	box-shadow: 0px 0px 5px #97e355,
+				0px 0px 25px #97e355,
+				0px 0px 50px #97e355,
+				0px 0px 200px #97e355;
+}
+
+
+@media (max-width: 900px) {
+
+  .dashboard-header {
+
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dashboard-header-left {
+    padding-left: 0.5rem;
+  }
+  
+  .dashboard-header-left h2 {
+    font-size: 1.0rem;
+    text-align: center;
+    
+
+  }
+
+
+
+  .dashboard-card {
+    max-width: 100vw;
+    padding-top: 1rem;
+    padding-left: 0.5rem ;
+    
+  }
+  .dashboard-gauges {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .gauge-card {
+    min-width: 0;
+    width: 100%;
+    max-width: 95vw;
+    margin-right: 20px;
+    
+  }
+  .dashboard-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .logout-btn {
+    align-self: flex-end;
+    width: fit-content;
+    margin-top: 0.5rem;
+  }
+}
