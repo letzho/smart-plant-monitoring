@@ -37,14 +37,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Start MQTT service only if not in production (Heroku doesn't need MQTT for demo)
-if (process.env.NODE_ENV !== 'production') {
-  try {
-    mqttService.start();
-    console.log('MQTT service started');
-  } catch (error) {
-    console.log('MQTT service failed to start:', error.message);
-  }
+// Start MQTT service to receive real sensor data
+try {
+  mqttService.start();
+  console.log('MQTT service started');
+} catch (error) {
+  console.log('MQTT service failed to start:', error.message);
 }
 
 const PORT = process.env.PORT || 5000;
