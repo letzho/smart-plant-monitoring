@@ -52,11 +52,11 @@ router.get('/history', async (req, res) => {
 // Add test data endpoint for debugging
 router.post('/test-data', async (req, res) => {
   try {
-    const { serial_number } = req.body;
+    const { serial_number, temperature, humidity, moisture } = req.body;
     const testData = {
-      temperature: 27.8,
-      humidity: 69.7,
-      moisture: 45.2,
+      temperature: temperature || 27.8,
+      humidity: humidity || 69.7,
+      moisture: moisture || 45.2,
       timestamp: new Date()
     };
     
