@@ -32,7 +32,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-mqttService.start();
+// Start MQTT service only if not in production (Heroku doesn't need MQTT for demo)
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    mqttService.start();
+    console.log('MQTT service started');
+  } catch (error) {
+    console.log('MQTT service failed to start:', error.message);
+  }
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
