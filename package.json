@@ -5,8 +5,6 @@
   "main": "backend/src/app.js",
   "scripts": {
     "start": "cd backend && npm install && npm start",
-    "build": "cd frontend && npm install && npm run build",
-    "heroku-postbuild": "npm run build",
     "dev": "cd backend && npm run dev"
   },
   "engines": {
