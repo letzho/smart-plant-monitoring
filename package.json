@@ -1,1 +1,18 @@
-{}
+{
+  "name": "smart-plant-monitoring",
+  "version": "1.0.0",
+  "description": "Smart Plant Monitoring System",
+  "main": "backend/src/app.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "build": "cd backend && npm run build",
+    "heroku-postbuild": "cd backend && npm run heroku-postbuild",
+    "dev": "cd backend && npm run dev"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": ["iot", "plant", "monitoring"],
+  "author": "Your Name",
+  "license": "MIT"
+}
