@@ -208,5 +208,5 @@ void loop() {
   Serial.print(moistureRaw);
   Serial.println(")");
 
-  delay(300000); // 5 minutes
+  delay(5000); // 5 seconds
 } 
