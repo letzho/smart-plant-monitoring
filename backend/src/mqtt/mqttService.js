@@ -1,6 +1,9 @@
 const mqtt = require('mqtt');
 const { pool } = require('../services/databaseService');
 
+// Store latest real-time data in memory (not database)
+const realTimeData = new Map();
+
 const start = () => {
   const client = mqtt.connect('mqtt://broker.mqttgo.io:1883');
   client.on('connect', () => {
@@ -14,6 +17,15 @@ const start = () => {
         const data = JSON.parse(message.toString());
         const { temperature, humidity, moisture, update_database } = data;
         
+        // Always store real-time data in memory
+        const realTimeEntry = {
+          temperature: parseFloat(temperature),
+          humidity: parseFloat(humidity),
+          moisture: parseFloat(moisture),
+          timestamp: new Date().toISOString()
+        };
+        realTimeData.set(serial, realTimeEntry);
+        
         // Only insert into database if update_database flag is true
         if (update_database) {
           await pool.query(
@@ -22,7 +34,7 @@ const start = () => {
           );
           console.log(`Database updated for device ${serial}: ${temperature}°C, ${humidity}%, ${moisture}%`);
         } else {
-          console.log(`Data received for device ${serial} (no DB update): ${temperature}°C, ${humidity}%, ${moisture}%`);
+          console.log(`Real-time data received for device ${serial}: ${temperature}°C, ${humidity}%, ${moisture}%`);
         }
       } catch (e) {
         console.error('Failed to parse or insert sensor data:', e);
@@ -31,4 +43,4 @@ const start = () => {
   });
 };
 
-module.exports = { start }; 
+module.exports = { start, realTimeData }; 

@@ -1,5 +1,6 @@
 const express = require('express');
 const { pool } = require('../services/databaseService');
+const { realTimeData } = require('../mqtt/mqttService');
 const router = express.Router();
 
 router.get('/latest', async (req, res) => {
@@ -7,6 +8,15 @@ router.get('/latest', async (req, res) => {
     const { serial_number } = req.query;
     console.log('Fetching latest data for serial_number:', serial_number);
     
+    // First check if we have real-time data
+    if (realTimeData.has(serial_number)) {
+      const realTime = realTimeData.get(serial_number);
+      console.log('Returning real-time data:', realTime);
+      res.json(realTime);
+      return;
+    }
+    
+    // Fallback to database data
     const result = await pool.query(
       'SELECT * FROM sensor_data WHERE serial_number=$1 ORDER BY timestamp DESC LIMIT 1',
       [serial_number]
@@ -26,7 +36,7 @@ router.get('/latest', async (req, res) => {
       console.log('Returning default data:', defaultData);
       res.json(defaultData);
     } else {
-      console.log('Returning actual data:', result.rows[0]);
+      console.log('Returning database data:', result.rows[0]);
       res.json(result.rows[0]);
     }
   } catch (error) {

@@ -30,7 +30,7 @@ export default function Dashboard({ user, onLogout, showRec, setShowRec }) {
         });
     };
     fetchData();
-    const interval = setInterval(fetchData, 10 * 60 * 1000); // Poll every 10 minutes (600,000 ms)
+    const interval = setInterval(fetchData, 5 * 1000); // Poll every 5 seconds (5,000 ms)
     return () => clearInterval(interval);
   }, [user.serial_number]);
 
