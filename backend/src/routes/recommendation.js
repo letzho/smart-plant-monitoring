@@ -24,7 +24,7 @@ Format your response as bullet points starting with "- " for each recommendation
 
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 300,
     });

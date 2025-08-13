@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './History.css';
+import { apiBaseUrl } from '../../config';
 
 export default function History({ user, onLogout }) {
   const [historyData, setHistoryData] = useState([]);
@@ -10,7 +11,7 @@ export default function History({ user, onLogout }) {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/sensor/history?serial_number=${user.serial_number}`);
+        const response = await fetch(`${apiBaseUrl}/api/sensor/history?serial_number=${user.serial_number}`);
         if (response.ok) {
           const data = await response.json();
           setHistoryData(data);

@@ -2,11 +2,11 @@
 const config = {
   // Development environment
   development: {
-    apiBaseUrl: 'http://localhost:3001'
+    apiBaseUrl: 'http://192.168.1.100:5000'  // Replace with your computer's actual IP address
   },
   // Production environment
   production: {
-    apiBaseUrl: ''
+    apiBaseUrl: 'https://smart-plant-monitoring-2024-b3719e233b1b.herokuapp.com'
   }
 };
 

@@ -12,7 +12,7 @@
     "node": "18.x"
   },
   "keywords": ["iot", "plant", "monitoring", "api"],
-  "author": "Your Name",
+  "author": "Leow",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",

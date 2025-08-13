@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './AdminTable.css';
+import { apiBaseUrl } from '../../config';
 
 export default function AdminTable() {
   const [rows, setRows] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:3001/api/admin/all')
+    fetch(`${apiBaseUrl}/api/admin/all`)
       .then(res => res.json())
       .then(setRows);
   }, []);
