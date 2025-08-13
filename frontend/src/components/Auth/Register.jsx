@@ -28,7 +28,7 @@ export default function Register() {
     <div className="register-container">
       <h2>Register for Smart Plant Monitor</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" value={username}
+        <input type="email" placeholder="Email" value={username}
           onChange={e => setUsername(e.target.value)} />
         <input type="password" placeholder="Password" value={password}
           onChange={e => setPassword(e.target.value)} />

@@ -29,7 +29,7 @@ export default function Login({ onLogin }) {
     <div className="login-container">
       <h2>Welcome to Smart Plant Monitor</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" value={username}
+        <input type="email" placeholder="Email" value={username}
           onChange={e => setUsername(e.target.value)} />
         <input type="password" placeholder="Password" value={password}
           onChange={e => setPassword(e.target.value)} />
