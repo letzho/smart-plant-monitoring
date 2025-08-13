@@ -21,10 +21,6 @@ Preferences preferences;
 String serialNumber = "";
 String passcode = "";
 
-// Database update timing
-unsigned long lastDatabaseUpdate = 0;
-const unsigned long DATABASE_UPDATE_INTERVAL = 600000; // 10 minutes in milliseconds
-
 // Custom parameters for WiFi Manager
 WiFiManagerParameter custom_serial("serial", "Tag ID (5 digits)", "00001", 6);
 
@@ -218,21 +214,11 @@ void loop() {
   dtostrf(humidity, 1, 2, humStr);
   itoa(moisturePercentage, moistStr, 10);
 
-  // Check if it's time to update database (every 10 minutes)
-  unsigned long currentTime = millis();
-  bool shouldUpdateDatabase = (currentTime - lastDatabaseUpdate >= DATABASE_UPDATE_INTERVAL);
-  
-  // Publish to MQTT with database flag
+  // Publish to MQTT
   String payload = String("{\"temperature\":") + tempStr +
                    ",\"humidity\":" + humStr +
-                   ",\"moisture\":" + moistStr +
-                   ",\"update_database\":" + (shouldUpdateDatabase ? "true" : "false") + "}";
+                   ",\"moisture\":" + moistStr + "}";
   client.publish(("plant/" + serialNumber + "/data").c_str(), payload.c_str());
-  
-  // Update database timestamp if needed
-  if (shouldUpdateDatabase) {
-    lastDatabaseUpdate = currentTime;
-  }
 
   // Print to Serial for debugging
   Serial.print("Serial: ");
@@ -245,8 +231,7 @@ void loop() {
   Serial.print(moisturePercentage);
   Serial.print("% (Raw: ");
   Serial.print(moistureRaw);
-  Serial.print(") | DB Update: ");
-  Serial.println(shouldUpdateDatabase ? "YES" : "NO");
+  Serial.println(")");
 
   delay(5000); // 5 seconds
 }

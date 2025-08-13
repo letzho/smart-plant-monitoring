@@ -26,15 +26,31 @@ router.get('/latest', async (req, res) => {
     console.log('Database result:', result.rows);
     
     if (result.rows.length === 0) {
-      // Return default values when no data exists
-      const defaultData = {
-        temperature: 0,
-        humidity: 0,
-        moisture: 0,
-        timestamp: new Date().toISOString()
-      };
-      console.log('Returning default data:', defaultData);
-      res.json(defaultData);
+      // Create a default entry in database if no data exists
+      try {
+        const defaultData = {
+          temperature: 0,
+          humidity: 0,
+          moisture: 0,
+          timestamp: new Date().toISOString()
+        };
+        
+        await pool.query(
+          'INSERT INTO sensor_data (serial_number, temperature, humidity, moisture) VALUES ($1, $2, $3, $4)',
+          [serial_number, defaultData.temperature, defaultData.humidity, defaultData.moisture]
+        );
+        
+        console.log('Created default database entry for:', serial_number);
+        res.json(defaultData);
+      } catch (error) {
+        console.error('Error creating default entry:', error);
+        res.json({
+          temperature: 0,
+          humidity: 0,
+          moisture: 0,
+          timestamp: new Date().toISOString()
+        });
+      }
     } else {
       console.log('Returning database data:', result.rows[0]);
       res.json(result.rows[0]);
